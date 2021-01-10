@@ -10,9 +10,8 @@ import {IconButton, MuiThemeProvider} from "@material-ui/core";
 import {Edit} from "@material-ui/icons";
 import {Link} from "react-router-dom";
 import FilterResetButton from "../../../components/Table/FilterResetButton";
-import reducer, {INITIAL_STATE,Creators} from "../../../store/filter";
 import useFilter from "../../../hooks/useFilter";
-
+import {Creators} from '../../../store/filter/index'
 
 const columnsDefinition: TableColumn[] = [
     {
@@ -69,17 +68,27 @@ const columnsDefinition: TableColumn[] = [
     }
 ];
 
+const debounceTime = 200;
+const debouncedSearchTime = 300;
+
 const Table = () => {
     const snackbar = useSnackbar();
     const subscribed = useRef(true);
     const [data,setData] = useState<Category[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
      const {
+         debouncedFilterState,
+         filterManager,
          filterState,
          dispatch,
          totalRecords,
          setTotalRecords
-     } = useFilter();
+     } = useFilter({
+         columns: columnsDefinition,
+         debounceTime: debounceTime,
+         rowsPerPage: 10,
+         rowsPerPageOptions: [10,25,50]
+     });
 
     useEffect(() => {
         subscribed.current = true;
@@ -88,10 +97,10 @@ const Table = () => {
             subscribed.current = false;
         }
     },[
-        filterState.search,
-        filterState.pagination.page,
-        filterState.pagination.per_page,
-        filterState.order
+        filterManager.clearSearchText(debouncedFilterState.search),
+        debouncedFilterState.pagination.page,
+        debouncedFilterState.pagination.per_page,
+        debouncedFilterState.order
     ]);
 
 
@@ -100,7 +109,7 @@ const Table = () => {
         try {
             const {data} = await categoryHttp.list<ListResponse<Category>>({
                 queryParam: {
-                    search: clearSearchText(filterState.search),
+                    search: filterManager.clearSearchText(filterState.search),
                     page: filterState.pagination.page,
                     per_page: filterState.pagination.per_page,
                     sort: filterState.order.sort,
@@ -125,13 +134,7 @@ const Table = () => {
             }
         }
 
-        function clearSearchText(text){
-            let newText = text;
-            if(text && text.value !== undefined){
-                newText = text.value;
-            }
-            return newText;
-        }
+
 
         return (
         <MuiThemeProvider theme={makeActionStyles(columnsDefinition.length - 1)}>
@@ -140,7 +143,7 @@ const Table = () => {
                 data={data}
                 title={'Listagem de Categorias'}
                 loading={loading}
-                debouncedSearchTime={500}
+                debouncedSearchTime={debouncedSearchTime}
                 options={{
                     serverSide: true,
                     searchText: filterState.search as any,
@@ -152,13 +155,11 @@ const Table = () => {
                             dispatch(Creators.setReset())
                         }}/>
                     ),
-                    onSearchChange: (value) => dispatch(Creators.setSearch({search: value})),
-                    onChangePage: (page) => dispatch(Creators.setPage({page: page + 1})),
-                    onChangeRowsPerPage: (perPage) => dispatch(Creators.setPerPage({per_page: perPage})),
-                    onColumnSortChange: (changedColumn: string, direction: string) => dispatch(Creators.setOrder({
-                        dir: direction,
-                        sort: changedColumn
-                    }))
+                    onSearchChange: (value) => filterManager.changeSearch(value),
+                    onChangePage: (page) => filterManager.changePage(page),
+                    onChangeRowsPerPage: (perPage) => filterManager.changeRowsPerPage(perPage),
+                    onColumnSortChange: (changedColumn: string, direction: string) =>
+                        filterManager.changeColumnSort(changedColumn, direction)
                 }}
             />
         </MuiThemeProvider>

@@ -13,7 +13,14 @@ interface FilterManageOptions{
     rowsPerPage: number;
     rowsPerPageOptions: number[];
     debounceTime: number;
-    history: History
+    history: History;
+    extraFilter?: ExtraFilter;
+}
+
+interface ExtraFilter{
+    getStateFromUrl: (queryParams: URLSearchParams) => any,
+    formatSearchParams: (debouncedState: FilterState) => any,
+    createValidationSchema: () => any
 }
 
 interface UseFilterOptions extends Omit<FilterManageOptions,'history'>{
@@ -54,15 +61,17 @@ export class FilterManager{
     columns: MUIDataTableColumn[];
     rowsPerPage: number;
     rowsPerPageOptions: number[];
-    history: History
+    history: History;
+    extraFilter?: ExtraFilter;
 
 
     constructor(options: FilterManageOptions) {
-        const {columns, rowsPerPage, rowsPerPageOptions, history} = options;
+        const {columns, rowsPerPage, rowsPerPageOptions, history, extraFilter} = options;
         this.columns = columns;
         this.rowsPerPage = rowsPerPage;
         this.rowsPerPageOptions = rowsPerPageOptions;
         this.history = history;
+        this.extraFilter = extraFilter;
         this.createValidationSchema();
     }
 
@@ -128,7 +137,8 @@ export class FilterManager{
            ...(this.state.order.sort && {
                sort: this.state.order.sort,
                dir: this.state.order.dir
-           })
+           }),
+           ...(this.extraFilter && this.extraFilter.formatSearchParams(this.state))
        }
     }
 
@@ -143,7 +153,12 @@ export class FilterManager{
             order:{
                 sort: queryParams.get('sort'),
                 dir: queryParams.get('dir')
-            }
+            },
+            ...(
+                this.extraFilter && {
+                    extraFilter: this.extraFilter.getStateFromUrl(queryParams)
+                }
+            )
         })
     }
 
@@ -175,7 +190,12 @@ export class FilterManager{
                     .nullable()
                     .transform(value => !value || !['asc','desc'].includes(value.toLowerCase()) ? undefined : value)
                     .default(null)
-            })
+            }),
+            ...(
+                this.extraFilter && {
+                    extraFilter: this.extraFilter.createValidationSchema()
+                }
+            )
         })
     }
 }

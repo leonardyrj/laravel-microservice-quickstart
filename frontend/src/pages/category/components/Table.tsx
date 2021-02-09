@@ -157,7 +157,8 @@ const Table = () => {
                     count: totalRecords,
                     customToolbar: () => (
                         <FilterResetButton handleClick={() => {
-                            dispatch(Creators.setReset())
+                          filterManager.resetFilter();
+                            // dispatch(Creators.setReset())
                         }}/>
                     ),
                     onSearchChange: (value) => filterManager.changeSearch(value),

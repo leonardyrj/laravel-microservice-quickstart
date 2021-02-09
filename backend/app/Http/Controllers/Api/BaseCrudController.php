@@ -32,6 +32,7 @@ abstract class BaseCrudController extends Controller
         if($hasFilter){
             $query = $query->filter($request->all());
         }
+
         $data = $request->has('all') || !$this->paginationSize
             ? $query->get()
             : $query->paginate($perPage);

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\CateforyCollection;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 

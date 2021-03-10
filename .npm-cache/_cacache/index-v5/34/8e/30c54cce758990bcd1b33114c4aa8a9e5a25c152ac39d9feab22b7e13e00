@@ -67,5 +67,9 @@ f207f6e63198aebd20a852f45353f0c76c83527a	{"key":"make-fetch-happen:request-cache
 6ff4b1b593ca8ca003b023352ddcab22e5cbbc7d	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1610564958028}
 dc1335a7274861012fc57f444842232e474530b2	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1610649536824}
 817dd9bc7218b855b3701ac01cbf37dda556983c	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1610729378669}
+<<<<<<< HEAD
 13de045a5a17a46178afbc8c8fc737c5e7a22598	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1612739521751}
 2eb29a2810faa50689b41a15e0d197b3f7f6ad7c	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1612739988728}
+=======
+ea2b717c9b18593213a6a12e29795e7e50d277d8	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1612873665307}
+>>>>>>> 08fbfca7e1bcae3e7d13263dcee0fe3db7a1be9c

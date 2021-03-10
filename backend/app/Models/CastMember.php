@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ModelFilters\CastMemberFilter;
 use App\Models\Traits\Uuid;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
@@ -22,12 +23,13 @@ class CastMember extends Model
     protected $fillable = ['name','type'];
     protected $dates = ['deleted_at'];
     public $incrementing = false;
+
     protected $casts = [
         'id' => 'string',
         'type' => 'integer'
     ];
 
     public function modelFilter(){
-        return $this->provideFilter(CastMember::class);
+        return $this->provideFilter(CastMemberFilter::class);
     }
 }

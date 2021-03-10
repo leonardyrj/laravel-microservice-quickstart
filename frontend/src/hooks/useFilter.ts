@@ -94,6 +94,17 @@ export class FilterManager{
         }))
     }
 
+    resetFilter(){
+        const INITIAL_STATE = {
+            ...this.schema.cast({}),
+            search: {value: null, update: true}
+        };
+        this.dispatch(Creators.setReset({
+            state: INITIAL_STATE
+        }));
+    }
+
+
     clearSearchText(text){
         let newText = text;
         if(text && text.value !== undefined){

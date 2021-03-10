@@ -5,9 +5,16 @@ import {useTheme, Theme, MuiThemeProvider, debounce} from "@material-ui/core";
 import DebouncedTableSearch from "./DebouncedTableSearch";
 
 
+
 export interface TableColumn extends MUIDataTableColumn{
     width?: string
 }
+
+export interface MuiDataTableRefComponent{
+    changePage: (page: number) => void;
+    changeRowsPerPage: (rowsPerPage: number) => void;
+}
+
 
 const makeDefaultOptions = (debauncedSearchTime?): MUIDataTableOptions => ({
     print: false,

@@ -73,3 +73,5 @@ dc1335a7274861012fc57f444842232e474530b2	{"key":"make-fetch-happen:request-cache
 =======
 ea2b717c9b18593213a6a12e29795e7e50d277d8	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1612873665307}
 >>>>>>> 08fbfca7e1bcae3e7d13263dcee0fe3db7a1be9c
+
+9d52dee6958a51187b265acc3ea04e4d89d092d5	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/-/npm/v1/security/audits/quick","integrity":null,"time":1615369621208}

@@ -1,4 +1,4 @@
-import {Dispatch, Reducer, useEffect, useReducer, useState} from "react";
+ import {Dispatch, Reducer, useEffect, useReducer, useState} from "react";
 import reducer, {Creators} from "../store/filter";
 import {MUIDataTableColumn} from "mui-datatables";
 import {State as FilterState, Action as FilterActions} from "../store/filter/types";
@@ -18,7 +18,7 @@ interface FilterManageOptions{
 }
 
 interface ExtraFilter{
-    getStateFromUrl: (queryParams: URLSearchParams) => any,
+    getStateFromURL: (queryParams: URLSearchParams) => any,
     formatSearchParams: (debouncedState: FilterState) => any,
     createValidationSchema: () => any
 }
@@ -44,9 +44,10 @@ export default function useFilter(options: UseFilterOptions){
     filterManager.state = filterState;
     filterManager.dispatch = dispatch;
     return{
-        debouncedFilterState,
+        columns: filterManager.columns,
         filterManager,
         filterState,
+        debouncedFilterState,
         dispatch,
         totalRecords,
         setTotalRecords
@@ -93,6 +94,11 @@ export class FilterManager{
             sort: changedColumn
         }))
     }
+
+    changeExtraFilter(data) { //{type: 'Diretor'}
+        this.dispatch(Creators.updateExtraFilter(data));
+    }
+
 
     resetFilter(){
         const INITIAL_STATE = {
@@ -167,7 +173,7 @@ export class FilterManager{
             },
             ...(
                 this.extraFilter && {
-                    extraFilter: this.extraFilter.getStateFromUrl(queryParams)
+                    extraFilter: this.extraFilter.getStateFromURL(queryParams)
                 }
             )
         })

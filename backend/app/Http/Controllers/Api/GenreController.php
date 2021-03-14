@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\GenreResource;
 use App\Models\Genre;
 use App\Models\Video;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 
@@ -75,5 +76,9 @@ class GenreController extends BaseCrudController
     protected function resouce()
     {
         return GenreResource::class;
+    }
+
+    protected function queryBuilder(): Builder {
+        return $this->model()::query()->with('categories');
     }
 }

@@ -8,7 +8,8 @@ const listRoutes = {
     'dashboard': 'Dashboard',
     'categoria.list': 'Categorias',
     'cast_members.list': 'Membros de Elenco',
-    'genres.list': 'Gêneros'
+    'genres.list': 'Gêneros',
+    'videos.list': 'Vídeos'
 
 }
 

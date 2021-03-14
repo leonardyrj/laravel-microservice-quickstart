@@ -158,6 +158,7 @@ const Table = () => {
         debouncedFilterState.pagination.page,
         debouncedFilterState.pagination.per_page,
         debouncedFilterState.order,
+        // Incluido esse Json para não chamar getData desnecessário.
         JSON.stringify(debouncedFilterState.extraFilter)
     ]);
 
@@ -205,7 +206,6 @@ const Table = () => {
                 loading={loading}
                 debouncedSearchTime={debouncedSearchTime}
                 options={{
-                    //serverSideFilterList,
                     serverSide: true,
                     responsive: "vertical",
                     searchText: filterState.search as any,
@@ -215,7 +215,6 @@ const Table = () => {
                     count: totalRecords,
                     onFilterChange: (column, filterList, type) => {
                         const columnIndex = columns.findIndex(c => c.name === column);
-                        //[ [], [], ['Diretor'], [], []  ]
                         filterManager.changeExtraFilter({
                             [column as any]: filterList[columnIndex].length ? filterList[columnIndex][0] : null
                         })

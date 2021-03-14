@@ -43,7 +43,9 @@ const reducer = createReducer<Typings.State, Typings.Action>(INITIAL_STATE,{
     [Types.SET_PAGE]: setPage,
     [Types.SET_PER_PAGE]: setPerPage,
     [Types.SET_ORDER]: setOrder,
-    [Types.SET_RESET]: setReset
+    [Types.SET_RESET]: setReset,
+    [Types.UPDATE_EXTRA_FILTER]: updateExtraFilter,
+
 })
 
 export default reducer;

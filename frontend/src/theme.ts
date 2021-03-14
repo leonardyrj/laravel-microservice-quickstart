@@ -107,7 +107,7 @@ const theme = createMuiTheme({
             root:{
                 color: (palette!.primary as SimplePaletteColorOptions).main
             }
-        }
+        },
 
     }
 })
